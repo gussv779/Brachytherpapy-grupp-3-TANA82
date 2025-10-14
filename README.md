@@ -10,3 +10,6 @@ poetry run streamlit run app.py --server.port 8085
 
 but in a configuration it would look more like:
 
+<img width="823" height="536" alt="image" src="https://github.com/user-attachments/assets/21093118-c985-489c-8ddb-5707b833c4c1" />
+
+
