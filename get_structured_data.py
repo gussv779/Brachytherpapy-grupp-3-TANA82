@@ -42,7 +42,7 @@ def get_structured_data(patient):
     order = ["Urethra", "Prostata", "Rectum", "Normalvävnad", "Dröjpunkt"]
     df_all["StructureName"] = pd.Categorical(df_all["StructureName"], categories=order, ordered=False)
 
-    return df_all, dose_intervall, df_points, df_dwell, df_structure,
+    return df_all, dose_intervall, df_points, df_dwell, df_structure
 
 def format_dose_intervall(dose_intervall_dict: Dict[str, pd.DataFrame]) -> pd.DataFrame:
     # Take the first non-empty sheet

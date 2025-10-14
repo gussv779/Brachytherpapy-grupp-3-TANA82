@@ -22,7 +22,6 @@ current_structureID = 1
 current_structure = df_dose_intervall.loc[df_dose_intervall["StructureID"] == current_structureID]
 Ls = current_structure["Lower"].iloc[0] # Upper dose bound for structure s∈S
 Us = current_structure["Upper"].iloc[0] # Prescription dose or a lower dose bound for structure s∈S
-#Mx = Maximum allowed dose for structure s∈S
 wls = current_structure["Lower Penalty"].iloc[0] # Non-negative penalty for dose being too low in structure s∈S
 wus = current_structure["Upper Penalty"].iloc[0] # Non-negative penalty for dose being too high in structure s∈S
 
