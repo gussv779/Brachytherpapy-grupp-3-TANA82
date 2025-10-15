@@ -10,7 +10,7 @@ def points_chart(df_all):
     datasets = [{"dimensions": ["X_mm", "Y_mm", "Z_mm", "StructureName", "Type"], "source": source}]
     for s in structures:
         datasets.append({
-            "transform": {"type": "filter", "config": {"dimension": "StructureName", "=": s}}
+            "transform": {"type": "filter", "config": {"dimension": "StructureName", "eq": s}}
         })
 
     series = []
@@ -29,7 +29,7 @@ def points_chart(df_all):
         })
 
     option = {
-        "tooltip": {},
+        "tooltip": {"trigger": "item"},
         "legend": {"type": "scroll"},
         "grid3D": {"axisPointer": {"show": True}},
         "xAxis3D": {"type": "value", "name": "X (mm)"},
@@ -47,7 +47,6 @@ def points_chart(df_all):
       <script>
         const chart = echarts.init(document.getElementById('chart'));
         const option = {json.dumps(option)};
-
         chart.setOption(option);
         window.addEventListener('resize', () => chart.resize());
       </script>

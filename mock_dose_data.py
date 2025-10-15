@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+#Hitte på värden, allt detta är mer eller mindre jox som ska tas bort sen
+
 def make_mock_dij(P: pd.DataFrame,
                   J: pd.DataFrame,
                   method: str = "distance",

@@ -1,6 +1,5 @@
 import cvxpy as cp
-import numpy as np
-import matplotlib.pyplot as plt
+
 
 def lpm_calculations(dij, df_dose_intervall, P):
     structure_params = {
@@ -56,28 +55,3 @@ def lpm_calculations(dij, df_dose_intervall, P):
     Dose_opt = dij.to_numpy() @ t.value
 
     return t.value, Dose_opt
-
-def plot_LPM_curve(Ls, Us, wL, wU, Dose_opt=None, structure_name=None):
-    doses = np.linspace(0.8*Ls, 1.2*Us, 400)
-    xL = np.maximum(Ls - doses, 0)
-    xU = np.maximum(doses - Us, 0)
-    total_penalty = wL * xL + wU * xU
-
-    plt.figure(figsize=(7,4))
-    plt.plot(doses, total_penalty, 'k-', lw=2, label="Penalty function")
-    plt.axvline(Ls, color="gray", linestyle=":", label="L$^s$")
-    plt.axvline(Us, color="gray", linestyle="--", label="U$^s$")
-
-    if Dose_opt is not None:
-        plt.scatter(Dose_opt, np.zeros_like(Dose_opt),
-                    color="red", alpha=0.6, label="Optimized doses")
-
-    plt.xlabel("Delivered dose (cGy)")
-    plt.ylabel("Penalty")
-    title = f"LPM Penalty Curve"
-    if structure_name:
-        title += f" — {structure_name}"
-    plt.title(title)
-    plt.legend()
-    plt.grid(True)
-    plt.show()

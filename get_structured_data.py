@@ -45,7 +45,6 @@ def get_structured_data(patient):
     return df_all, dose_intervall, df_points, df_dwell, df_structure
 
 def format_dose_intervall(dose_intervall_dict: Dict[str, pd.DataFrame]) -> pd.DataFrame:
-    # Take the first non-empty sheet
     for name, df in dose_intervall_dict.items():
         if not df.empty:
             dose_df = df.copy()
