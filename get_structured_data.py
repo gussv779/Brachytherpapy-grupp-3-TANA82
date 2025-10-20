@@ -13,8 +13,6 @@ def get_structured_data(patient):
 
     mat = loadmat(f"data/patient_data/raw_data/{patient}.mat", squeeze_me=True, struct_as_record=False)
 
-    dose_intervall = load_penalty_workbook("data/dosecalculation/Dosintervall.xls", engine='xlrd')
-
     df_points = pd.DataFrame(mat["points"].reshape(-1, 3), columns=["X_mm", "Y_mm", "Z_mm"])
     df_points["StructureID"] = mat["structure"].reshape(-1).astype(int)
     df_dwell = pd.DataFrame(mat["dwell"].reshape(-1, 3), columns=["X_mm", "Y_mm", "Z_mm"])
@@ -42,9 +40,11 @@ def get_structured_data(patient):
     order = ["Urethra", "Prostata", "Rectum", "Normalvävnad", "Dröjpunkt"]
     df_all["StructureName"] = pd.Categorical(df_all["StructureName"], categories=order, ordered=False)
 
-    return df_all, dose_intervall, df_points, df_dwell, df_structure
+    return df_all, df_points, df_dwell, df_structure
 
-def format_dose_intervall(dose_intervall_dict: Dict[str, pd.DataFrame]) -> pd.DataFrame:
+def format_dose_intervall() -> pd.DataFrame:
+    dose_intervall_dict = load_penalty_workbook("data/dosecalculation/Dosintervall.xls", engine='xlrd')
+
     for name, df in dose_intervall_dict.items():
         if not df.empty:
             dose_df = df.copy()
