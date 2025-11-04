@@ -45,7 +45,7 @@ def lpm_calculations(dij, df_dose_intervall, P):
         ]
 
 
-        # here we're summing up the s∈Swlsi∈Psxli+s∈Swusi∈Psxu
+        # here we're just adding the sum of the structure penalties to the objective terms list
         objective_terms.append(wL * cp.sum(xL[idx]) + wU * cp.sum(xU[idx]))
 
     # Combine everything for each structure

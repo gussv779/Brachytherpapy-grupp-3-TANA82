@@ -1,4 +1,3 @@
-import altair as alt
 import streamlit as st
 
 st.set_page_config(page_title="Dose Intervals — Live Editor", layout="wide")
@@ -27,7 +26,7 @@ def intervalls_dataframe():
             "Upper Penalty": st.column_config.NumberColumn("Upper Penalty", min_value=0.0),
         },
         column_order=shown_cols,
-        hide_index=False,
+        hide_index=True,
         key="dose_table",
     )
 
@@ -37,6 +36,9 @@ def intervalls_dataframe():
     chart_df = model_df.dropna(subset=["Lower", "Upper", "Structure"]).copy()
     chart_df["StructureOrder"] = chart_df["Structure"].astype("category")
 
+    return edited
+
+    """ Optional charts for visualizing the intervalls, kinda  redundant
     st.subheader("Charts")
 
     with st.expander("Intervals & penalties", expanded=False):
@@ -75,3 +77,4 @@ def intervalls_dataframe():
             ).properties(height=240), use_container_width=True)
 
     return edited
+    """

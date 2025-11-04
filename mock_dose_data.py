@@ -62,7 +62,7 @@ def compute_point_doses(dij: pd.DataFrame, t: pd.Series) -> pd.Series:
     return pd.Series(dose, index=dij.index, name="Dose")
 
 # --------- Your wrapper for quick use ----------
-def dose_for_each_point(P, S, J, method="distance", seed=0):
+def dose_for_each_point(P, J, method="distance", seed=0):
     dij = make_mock_dij(P, J, method=method, seed=seed)
     t = sample_dwell_times(J, seed=seed)
     Dose = compute_point_doses(dij, t)
