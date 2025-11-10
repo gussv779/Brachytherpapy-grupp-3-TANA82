@@ -1,6 +1,6 @@
 from get_structured_data import get_structured_data, format_dose_intervall
 from lpm_calculations import lpm_calculations
-from mock_dose_data import dose_for_each_point
+from dose_calculation import dose_for_each_point
 
 patient = "patient1"
 

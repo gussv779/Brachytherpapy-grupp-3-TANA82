@@ -1,6 +1,5 @@
 import cvxpy as cp
 
-
 def lpm_calculations(dij, df_dose_intervall, P):
     structure_params = {
         row.StructureID: {
@@ -51,7 +50,8 @@ def lpm_calculations(dij, df_dose_intervall, P):
     # Combine everything for each structure
     objective = cp.Minimize(cp.sum(objective_terms))
     prob = cp.Problem(objective, constraints)
-    prob.solve()
+    prob.solve(verbose=True)
+    print(prob.value)
     Dose_opt = dij.to_numpy() @ t.value
 
     return t.value, Dose_opt
