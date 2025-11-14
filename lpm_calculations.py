@@ -1,4 +1,6 @@
 import cvxpy as cp
+import numpy as np
+
 
 def lpm_calculations(dij, df_dose_intervall, P):
     structure_params = {
@@ -43,7 +45,6 @@ def lpm_calculations(dij, df_dose_intervall, P):
             dose_sum_over_time <= Us + xU[idx]
         ]
 
-
         # here we're just adding the sum of the structure penalties to the objective terms list
         objective_terms.append(wL * cp.sum(xL[idx]) + wU * cp.sum(xU[idx]))
 
@@ -53,5 +54,8 @@ def lpm_calculations(dij, df_dose_intervall, P):
     prob.solve(verbose=True)
     print(prob.value)
     Dose_opt = dij.to_numpy() @ t.value
+
+    mean_t = float(np.mean(t.value))
+    print(f"Mean dwell time: {mean_t:.4f} s")
 
     return t.value, Dose_opt
