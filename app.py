@@ -3,11 +3,11 @@ import streamlit as st
 
 from charts.dose_intervall_table.dose_intervall import intervalls_dataframe
 from charts.lpm_chart.lpm_chart import lpm_chart
-from dose_calculation import dose_calc, radial_dose_diagram
+from equations.dose_calculation import dose_calc
 from get_structured_data import get_structured_data, convert_bounds
-from histogram import dose_histogram
-from lpm_calculations import lpm_calculations
-from vx_dx import vx_dx_diagram
+from charts.histogram.histogram import dose_histogram
+from equations.lpm_calculations import lpm_calculations
+from charts.vx_dx.vx_dx import vx_dx_diagram
 
 st.set_page_config(page_title="3D Scatter (ECharts)", page_icon="📈", layout="wide")
 
@@ -73,5 +73,3 @@ lpm_chart(P_opt)
 dose_histogram(P_opt)
 
 vx_dx_diagram(P_opt)
-
-#radial_dose_diagram(a_df, rakr_SJ)
