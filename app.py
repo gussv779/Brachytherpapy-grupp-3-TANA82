@@ -1,13 +1,14 @@
 import numpy as np
 import streamlit as st
 
-from charts.dose_intervall_table.dose_intervall import intervalls_dataframe
-from charts.lpm_chart.lpm_chart import lpm_chart
+from charts.dose_intervall import intervalls_dataframe
+from charts.lpm_chart import lpm_chart
 from equations.dose_calculation import dose_calc
 from get_structured_data import get_structured_data, convert_bounds
-from charts.histogram.histogram import dose_histogram
+from charts.histogram import dose_histogram
 from equations.lpm_calculations import lpm_calculations
-from charts.vx_dx.vx_dx import vx_dx_diagram
+from charts.vx_dx import vx_dx_diagram
+from charts.time_array_display import time_array
 
 st.set_page_config(page_title="3D Scatter (ECharts)", page_icon="📈", layout="wide")
 
@@ -31,7 +32,7 @@ with col2:
     )
     rakr_SJ = rakr_h * 1e-3 / 3600.0
 
-df_all, P, J, a_df, df_points_original, df_dwell_original = get_structured_data(patient)
+P, J, a_df, df_points_original, df_dwell_original = get_structured_data(patient)
 
 dij_key = (patient, rakr_SJ)
 
@@ -73,3 +74,7 @@ lpm_chart(P_opt)
 dose_histogram(P_opt)
 
 vx_dx_diagram(P_opt)
+
+dwell_points_with_time = J.copy()
+dwell_points_with_time["Time (s)"] = np.asarray(tj).reshape(-1)
+time_array(dwell_points_with_time)

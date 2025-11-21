@@ -26,8 +26,6 @@ def get_structured_data(patient):
     df_points = pd.DataFrame(mat["points"].reshape(-1, 3), columns=["X_mm", "Y_mm", "Z_mm"])
     df_points["StructureID"] = mat["structure"].reshape(-1).astype(int)
     df_dwell = pd.DataFrame(mat["dwell"].reshape(-1, 3), columns=["X_mm", "Y_mm", "Z_mm"])
-    #df_structure = pd.DataFrame(mat["structure"].reshape(-1))
-    #Since we're incorporating the structure into df_points we don't really need a df_structure
 
 
     id_to_name = {
@@ -38,18 +36,7 @@ def get_structured_data(patient):
     }
     df_points["StructureName"] = df_points["StructureID"].map(id_to_name)
 
-    DWELL_ID = 5
-    DWELL_NAME = "Dröjpunkt"
-
-    df_dwell["StructureID"] = DWELL_ID
-    df_dwell["StructureName"] = DWELL_NAME
-
-    df_all = pd.concat([df_points, df_dwell], ignore_index=True)
-
-    order = ["Urethra", "Prostata", "Rectum", "Normalvävnad", "Dröjpunkt"]
-    df_all["StructureName"] = pd.Categorical(df_all["StructureName"], categories=order, ordered=False)
-
-    return df_all, df_points, df_dwell, a_df, df_points_original, df_dwell_original
+    return df_points, df_dwell, a_df, df_points_original, df_dwell_original
 
 def format_dose_intervall() -> pd.DataFrame:
     dose_intervall_dict = load_penalty_workbook("data/dosecalculation/Dosintervall.xls", engine='xlrd')
