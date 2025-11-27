@@ -48,6 +48,8 @@ def _make_line_series(data_xy: List[Tuple[float, float]]) -> List[List[float]]:
 
 def vx_dx_diagram(P):
 
+    st.markdown("### Vx/Dx Värden")
+
     vx_curves, dx_curves = compute_vx_dx(P)
 
     dmax = float(np.nanmax(P["Dose"].to_numpy()))
@@ -114,11 +116,9 @@ def vx_dx_diagram(P):
         "min": vol_min,
         "max": vol_max,
     }
-    title = "DVH (kumulativ) — x: Dose, y: Volym"
     key_chart = "dvh-chart-standard"
 
     options = {
-        "title": {"text": title, "left": "center"},
         "animationDuration": 700,
         "tooltip": {
             "trigger": "axis",
