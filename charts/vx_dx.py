@@ -1,4 +1,3 @@
-# vx_dx.py
 from __future__ import annotations
 import numpy as np
 import pandas as pd
@@ -62,6 +61,36 @@ def vx_dx_diagram(P):
         key="dvh-y-vol"
     )
 
+    struct_names = list(vx_curves.keys())
+
+    for i in range(0, len(struct_names), 2):
+        row_structs = struct_names[i:i+2]
+        row_cols = st.columns(len(row_structs))
+
+        for s, col in zip(row_structs, row_cols):
+            vx_df = vx_curves[s]
+            dx_df = dx_curves[s]
+
+            vx_val = float(np.interp(dose_max, vx_df["dose"], vx_df["Vx"]))
+            dx_val = float(np.interp(vol_max, dx_df["volume_pct"], dx_df["Dx"]))
+
+            with col:
+                with st.container(border=True):
+                    st.markdown(f"**{s}**")
+                    mcol1, mcol2 = st.columns(2)
+                    with mcol1:
+                        st.metric(
+                            label=f"V{dose_max:.1f} Gy",
+                            value=f"{vx_val:.1f} %",
+                            width="content",
+                        )
+                    with mcol2:
+                        st.metric(
+                            label=f"D{vol_max:.0f} %",
+                            value=f"{dx_val:.2f} Gy",
+                            width="content",
+                        )
+
     series = [{
         "type": "line",
         "name": s,
@@ -72,17 +101,28 @@ def vx_dx_diagram(P):
         "data": _make_line_series(list(zip(df["dose"], df["Vx"]))),
     } for s, df in vx_curves.items()]
 
-    x_axis = {"type": "value", "name": "Dose (Gy)", "nameGap": 22,
-              "min": dose_min, "max": dose_max}
-    y_axis = {"type": "value", "name": "Volym (%)",
-              "min": vol_min, "max": vol_max}
+    x_axis = {
+        "type": "value",
+        "name": "Dose (Gy)",
+        "nameGap": 22,
+        "min": dose_min,
+        "max": dose_max,
+    }
+    y_axis = {
+        "type": "value",
+        "name": "Volym (%)",
+        "min": vol_min,
+        "max": vol_max,
+    }
     title = "DVH (kumulativ) — x: Dose, y: Volym"
     key_chart = "dvh-chart-standard"
 
     options = {
         "title": {"text": title, "left": "center"},
         "animationDuration": 700,
-        "tooltip": {"trigger": "axis", "valueFormatter": {"function": "v => v?.toFixed?.(2)"}},
+        "tooltip": {
+            "trigger": "axis",
+        },
         "legend": {"type": "scroll", "bottom": 0, "selectedMode": "multiple"},
         "grid": {"left": 48, "right": 16, "bottom": 60, "top": 40},
         "xAxis": x_axis,
@@ -90,4 +130,3 @@ def vx_dx_diagram(P):
         "series": series,
     }
     st_echarts(options=options, height="420px", key=key_chart)
-

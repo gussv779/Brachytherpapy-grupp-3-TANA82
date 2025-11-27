@@ -10,7 +10,7 @@ from equations.lpm_calculations import lpm_calculations
 from charts.vx_dx import vx_dx_diagram
 from charts.time_array_display import time_array
 
-st.set_page_config(page_title="3D Scatter (ECharts)", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Dose Optimization", page_icon="📈", layout="wide")
 
 ss = st.session_state
 ss.setdefault("dij_cache", {})

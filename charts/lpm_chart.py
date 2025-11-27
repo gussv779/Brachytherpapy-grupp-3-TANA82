@@ -11,29 +11,25 @@ def lpm_chart(P_dose):
 
     dose_min = float(np.nanmin(P_dose["Dose"])) if len(P_dose) else 0.0
     dose_max = float(np.nanmax(P_dose["Dose"])) if len(P_dose) else 1.0
-    if dose_max <= dose_min:
-        dose_max = dose_min + 1e-6
 
     p5, p95 = np.percentile(P_dose["Dose"], [5, 95]) if len(P_dose) else (0.0, 1.0)
     vm_min = float(min(dose_min, p5))
     vm_max = float(max(dose_max, p95))
-    if vm_max <= vm_min:
-        vm_max = vm_min + 1e-6
 
     html = f"""
     <style>
       .chart-panel {{
         width: 720px;
         max-width: 50%;
-        border: 1px solid #3a3a3a;   /* border */
-        border-radius: 10px;         /* rounded corners */
-        padding: 12px;               /* space between border and chart */
+        border: 1px solid #3a3a3a;
+        border-radius: 10px;
+        padding: 12px;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
         background: rgba(255,255,255,0.02);
       }}
       .chart-fill {{
         width: 100%;
-        height: 680px;               /* inner chart height */
+        height: 680px;
       }}
       @media (max-width: 900px) {{
         .chart-panel {{ max-width: 100%; width: 100%; }}
