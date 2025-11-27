@@ -12,7 +12,7 @@ def _vx_curve_from_sorted(d_sorted: np.ndarray, dose_grid: np.ndarray) -> np.nda
     return vx
 
 def _dx_curve_from_sorted(d_sorted: np.ndarray, vol_grid_pct: np.ndarray) -> np.ndarray:
-    q = 1.0 - (vol_grid_pct / 100.0)
+    q = vol_grid_pct / 100.0
     return np.percentile(d_sorted, q * 100.0, method="linear")
 
 def _prep_grids(d_all: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
